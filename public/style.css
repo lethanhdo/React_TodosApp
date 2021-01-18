@@ -1,0 +1,217 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    text-decoration: none;
+    list-style-type: none;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  
+
+  li {
+    list-style-type: none;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  h2{
+    margin-top: 50px;
+    font-size: 100px;
+    font-weight: 100;
+    text-align: center;
+    color: rgb(255 6 6 / 75%);
+    text-shadow: 5px 3px #bca4a4;
+  }
+
+  .table{
+    margin-top: 15px;
+  }
+
+  .header{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn-add{
+    width: 120px;
+    box-shadow: 3px 3px #8d8a8a;
+  }
+
+  .btn-danger{
+    margin-left: 5px;
+  }
+
+  .card{
+    box-shadow: 3px 3px #d5d5d5;
+  }
+
+  .card-header{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .icon{
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #DC3545;
+    color: cornsilk;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tittle{
+    font-weight: bold;
+  }
+
+  select{
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  .addToDo{
+    margin-top: 15px;
+  }
+
+  .name-new{
+    text-decoration: none;
+  }
+  .name-done{
+    text-decoration: line-through;
+    color: #c2c1c1;
+  }
+
+  .badge-success{
+    cursor: pointer;
+    background-color: #fff!important;
+  }
+  .badge-danger{
+    cursor: pointer;
+    background-color: #fff!important;
+  }
+  .icon-check-green{
+    color: #39ca39;
+    font-size: 30px;
+  }
+
+  .icon-check-none{
+    color: #dae0e5;
+    font-size: 30px;
+  }
+  .empty-text{
+    background: royalblue;
+  }
+
+  .td-check{
+    width: 10%;
+  }
+
+  .td-button{
+    width: 20%;
+  }
+  .name-new{
+    cursor: pointer;
+    text-align: left!important;
+    vertical-align: middle!important;
+    width: 70%;
+  }
+  .name-done{
+    cursor: pointer;
+    text-align: left!important;
+    vertical-align: middle!important;
+    width: 70%;
+  }
+
+  tbody{
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-warningg{
+    background: none;
+    border-color: none!important;
+  }
+
+  .btn-dangerr{
+    background: none;
+    border-color: none!important;
+  }
+
+  .btn-warningg i{
+    color: blue;
+  }
+
+  .btn-dangerr i{
+    color: red;
+  }
+
+  select{
+    float: right;
+    border: 1px solid rgba(175, 47, 47, 0.2);
+    border-radius: 3px;
+    margin: 5px 0;
+  }
+
+  .p-count{
+    text-align: left!important;
+    color: #c2c1c1;
+  }
+ 
+  @media only screen and (max-width: 576px) {
+
+    h2{
+      font-size: 50px!important;
+    }
+    .empty-text{
+      background: royalblue;
+    }
+
+    tr{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin:  0;
+    }
+    .td-check{
+      width: 65px;
+      height: 50px;
+    }
+  
+    td{
+      padding: 0!important;
+      height: 50px;
+      display: flex;
+      align-items: center;
+    }
+    .td-button{
+      width: 90px;
+      height: 50px;
+
+    }
+    .name-new{
+      cursor: pointer;
+      text-align: left!important;
+      vertical-align: middle!important;
+      width: 200px;
+    }
+    .name-done{
+      cursor: pointer;
+      text-align: left!important;
+      vertical-align: middle!important;
+      width: 200px;
+    }
+
+   
+
+  }
+
+  .display1{
+    display: none;
+  }
