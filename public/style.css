@@ -215,3 +215,17 @@
   .display1{
     display: none;
   }
+  a{
+    color: #8d8a8a;
+  }
+  a:hover{
+    text-decoration: none;
+  }
+
+  .sort-selected{
+    color: red;
+  }
+
+  .Search{
+    display: none;
+  }

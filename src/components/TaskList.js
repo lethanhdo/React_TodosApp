@@ -5,6 +5,7 @@ class TaskList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            filterName : '',
             filterStatus : -1 //active:0  completed:1
         }
     }
@@ -15,7 +16,9 @@ class TaskList extends Component {
         var value = target.value
 
         this.props.onFilter(   
+            name === 'filterName' ? value : this.state.filterName,
             name === 'filterStatus' ? value : this.state.filterStatus
+
         )
         this.setState({
             [name]:value
@@ -37,7 +40,18 @@ class TaskList extends Component {
             <div className="table-container">
                 <div>
                     <div><span>{this.props.countCom}</span></div>
-                    <select name='filterStatus'  value={this.filterStatus} onChange={this.onChange}>
+                    <input 
+                        placeholder="Filter by name"
+                        type="text"
+                        className="form-control"
+                        name="filterName"
+                        value={this.filterName}
+                        onChange={this.onChange}
+                    />
+                    <select 
+                        name='filterStatus'  
+                        value={this.filterStatus} 
+                        onChange={this.onChange}>
                         <option value={-1} >All</option>
                         <option value={0}>Active</option>
                         <option  value={1}>Completed</option>

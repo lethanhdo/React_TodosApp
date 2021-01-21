@@ -3,6 +3,7 @@ import './App.css';
 import Control from './components/Control';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
+import Search from './components/Search';
 // import {filter} from 'lodash';
 
 
@@ -15,8 +16,12 @@ class App extends Component {
       taskEditing : null,
       countCom :0,
       filter:{
+        name : '',
         status:-1
-      }
+      },
+      keyword:'',
+      sortBy : 'name',
+      sortValue : 1
     }
   }
   componentWillMount(){
@@ -27,13 +32,13 @@ class App extends Component {
       });
 
       var count =0;
-    console.log(tasks)
+    // console.log(tasks)
     tasks.forEach((item)=>{
       if(item.status===true){
         count++;
       }
     });
-    console.log('count:'+count)
+    // console.log('count:'+count)
     }
   }
 
@@ -164,22 +169,37 @@ class App extends Component {
 
 
 
-  onFilter = (filterStatus)=>{
+  onFilter = (filterName,filterStatus)=>{
     filterStatus = parseInt(filterStatus,10)
     this.setState({
       filter:{
-        status:filterStatus
+        name : filterName.toLowerCase(),
+        status : filterStatus
       }
     })
-}
+  }
+
+  onSearch = (keyword)=>{
+    this.setState({
+      keyword : keyword
+    })
+  }
+
+  onSort = (sortBy,sortValue)=>{
+    this.setState({
+      sortBy : sortBy,
+      sortValue : sortValue
+    })
+    console.log(this.state)
+  }
 
   render(){
 
-    var { tasks, isDisplayForm, taskEditing,filter } = this.state; 
+    var { tasks, isDisplayForm, taskEditing,filter,keyword,sortBy,sortValue } = this.state; 
 
 
     var count =0;
-    console.log(tasks)
+    // console.log(tasks)
     tasks.forEach((item)=>{
       if(item.status===true){
         count++;
@@ -188,6 +208,12 @@ class App extends Component {
     
 
     if(filter){
+      if(filter.name){
+        tasks = tasks.filter((task)=>{
+          return task.name.toLowerCase().indexOf(filter.name) !== -1
+        })
+      }
+
       tasks = tasks.filter((task)=>{
         if(filter.status===-1){
           return task
@@ -195,6 +221,20 @@ class App extends Component {
         else{
           return task.status === (filter.status ===0 ? true : false)
         }
+      })
+    }
+
+    if(keyword){
+      tasks = tasks.filter((task)=>{
+       return task.name.toLowerCase().indexOf(keyword) !== -1
+      })
+    }
+
+    if(sortBy === 'name'){
+      tasks.sort((a,b)=>{
+        if(a.name>b.name) return sortValue;
+        else if(a.name<b.name) return -sortValue;
+        else return 0;
       })
     }
 
@@ -219,7 +259,11 @@ class App extends Component {
               <div className="row">
              
                 <div className={isDisplayForm ? 'col-md-8' : 'col-md-8'}>
-                  <Control/>
+                  <Control onSearch={this.onSearch}
+                          onSort={this.onSort}
+                          sortBy={sortBy}
+                          sortValue={sortValue}
+                  />
                   <TaskList tasks = {tasks} 
                             onUpdateStatus={this.onUpdateStatus}
                             onDelete={this.onDelete}
