@@ -101,7 +101,7 @@ class TaskForm extends Component {
                 <div>
                 {/* <label>Status:</label> */}
                 <select className="form-control" id="exampleFormControlSelect1" name="status" value={this.state.status} onChange={this.onChange}>
-                <option value={false}>Completed</option>     
+                <option value={false}>Done</option>     
                   <option value={true}>New</option>            
                 </select>
                 </div>

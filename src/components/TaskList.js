@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TaskItem from './TaskItem';
+import Sort from './Sort';
 
 class TaskList extends Component {
     constructor(props) {
@@ -40,27 +41,43 @@ class TaskList extends Component {
             <div className="table-container">
                 <div>
                     <div><span>{this.props.countCom}</span></div>
-                    <input 
-                        placeholder="Filter by name"
-                        type="text"
-                        className="form-control"
-                        name="filterName"
-                        value={this.filterName}
-                        onChange={this.onChange}
-                    />
-                    <select 
-                        name='filterStatus'  
-                        value={this.filterStatus} 
-                        onChange={this.onChange}>
-                        <option value={-1} >All</option>
-                        <option value={0}>Active</option>
-                        <option  value={1}>Completed</option>
-                    </select>
+                    <div className="Control">
+                        <input 
+                            placeholder="Search by name"
+                            type="text"
+                            className="Control-search-by-name form-control"
+                            name="filterName"
+                            value={this.filterName}
+                            onChange={this.onChange}
+                        />
+                        
+                        
+                        <div className="Control-filter-by-status">
+                            <select 
+                                name='filterStatus'  
+                                value={this.filterStatus} 
+                                onChange={this.onChange}>
+                                <option value={-1} >All</option>
+                                <option value={0}>New</option>
+                                <option  value={1}>Done</option>
+                            </select>
+                        </div>
+
+
+                        <div className="Control-sort-by-name">
+                            <Sort onSort={this.props.onSort}
+                            sortBy={this.props.sortBy}    
+                            sortValue={this.props.sortValue}    
+                            />
+                        </div>
+                        
+                    </div>
+                    
                 </div>
                            
                         
                 <table className="table">
-                    <tbody> {elmTasks} </tbody>      
+                    <tbody>{elmTasks}</tbody>      
                 </table>
                 </div>
         );

@@ -3,7 +3,7 @@ import './App.css';
 import Control from './components/Control';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
-import Search from './components/Search';
+// import Search from './components/Search';
 // import {filter} from 'lodash';
 
 
@@ -24,23 +24,24 @@ class App extends Component {
       sortValue : 1
     }
   }
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
     if(localStorage && localStorage.getItem('tasks')){
       var tasks = JSON.parse(localStorage.getItem('tasks'));
       this.setState({
         tasks : tasks
       });
-
-      var count =0;
-    // console.log(tasks)
-    tasks.forEach((item)=>{
-      if(item.status===true){
-        count++;
-      }
-    });
-    // console.log('count:'+count)
     }
   }
+
+  
+
+      // var count =0;
+    // console.log(tasks)
+    // tasks.forEach((item)=>{
+    //   if(item.status===true){
+        // count++;
+      // };
+    // console.log('count:'+count)
 
   onGenerateData = () =>{
     var tasks = [
@@ -260,9 +261,7 @@ class App extends Component {
              
                 <div className={isDisplayForm ? 'col-md-8' : 'col-md-8'}>
                   <Control onSearch={this.onSearch}
-                          onSort={this.onSort}
-                          sortBy={sortBy}
-                          sortValue={sortValue}
+                         
                   />
                   <TaskList tasks = {tasks} 
                             onUpdateStatus={this.onUpdateStatus}
@@ -270,6 +269,9 @@ class App extends Component {
                             onUpdate={this.onUpdate}
                             onFilter={this.onFilter}
                             countCom={this.count}
+                            onSort={this.onSort}
+                            sortBy={sortBy}
+                            sortValue={sortValue}
                   />
                 </div>     
                 <div className={isDisplayForm ? 'col-md-4' : ''}>
