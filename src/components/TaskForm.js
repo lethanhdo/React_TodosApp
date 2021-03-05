@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './../actions/index';
 
 class TaskForm extends Component {
   constructor(props) {
@@ -6,43 +8,40 @@ class TaskForm extends Component {
     this.state = {
       id : '',
       name : '',
-      status : true
+      status : false
     }
+    this.myRef = React.createRef();
   }
 
-  componentWillMount(){
-    if(this.props.task){
+  UNSAFE_componentWillMount(){
+    if(this.props.itemEditing && this.props.itemEditing.id !== null){
       this.setState({
-        id: this.props.task.id,
-        name: this.props.task.name,
-        status: this.props.task.status
+        id: this.props.itemEditing.id,
+        name: this.props.itemEditing.name,
+        status: this.props.itemEditing.status
       })
     }
+    else{
+      this.onClear();
+    }
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps && nextProps.task){
+  UNSAFE_componentWillReceiveProps(nextProps){
+    if(nextProps && nextProps.itemEditing){
       this.setState({
-        id: nextProps.task.id,
-        name: nextProps.task.name,
-        status: nextProps.task.status
+        id: nextProps.itemEditing.id,
+        name: nextProps.itemEditing.name,
+        status: nextProps.itemEditing.status
       });
     }
-    else if(!nextProps.task){
-      this.setState (
-        {
-          id : '',
-          name : '',
-          status : false
-        }
-      ) 
+    else {
+      this.onClear()
+    }
+    if(this.myRef.current) {
+      this.myRef.current.focus()
     }
   }
 
-  componentDidMount(){
-    this.searchInput.focus();
-  }
-  
   onCloseForm = ()=>{
     this.props.onCloseForm();
   }
@@ -59,32 +58,31 @@ class TaskForm extends Component {
     })
   }
 
-  onSubmit = (event)=>{
-    event.preventDefault();
-    this.props.onSubmit(this.state);
+  onSave = (event)=>{
+    this.props.onSaveTask(this.state);
     this.onClear();
     this.onCloseForm();
   }
 
   onClear = ()=>{
     this.setState({
-      name: '',
+      name : '',
       status : true
     })
-    this.searchInput.focus();
   }
 
   handleKeyPress = (event) => {
     if(event.key === 'Enter'){
-
-        event.preventDefault();
-        this.props.onSubmit(this.state);
+        // event.preventDefault();
+        this.onSave();
         this.onClear();
         this.onCloseForm();
     }
   }
+
     render() {
       var { id } =this.state;
+      if(!this.props.isDisplayForm) return '';
         return (
           <div className="addToDo">
             <div className="card" onSubmit={this.onSubmit}>
@@ -95,19 +93,18 @@ class TaskForm extends Component {
               </div>
               <div className="card-body">
                 <div>
-                  {/* <label>Name:</label> */}
-                  <input type="text" className="form-control" placeholder="What needs to be done?"  name="name" value={this.state.name} onChange={this.onChange} onKeyPress={this.handleKeyPress} ref={inputEl => (this.searchInput = inputEl)}/>
+                  <input autoFocus ref={this.myRef} type="text" className="form-control" placeholder="What needs to be done?"  name="name" value={this.state.name} onChange={this.onChange} onKeyPress={this.handleKeyPress}/>
                 </div>
                 <div>
                 {/* <label>Status:</label> */}
                 <select className="form-control" id="exampleFormControlSelect1" name="status" value={this.state.status} onChange={this.onChange}>
-                <option value={false}>Done</option>     
+                <option value={false}>Completed</option>     
                   <option value={true}>New</option>            
                 </select>
                 </div>
               </div>
               <div className="card-footer text-muted">
-                <button type="submit" onClick={this.onSubmit} className="btn btn-warning">Save</button>
+                <button type="submit" onClick={this.onSave} className="btn btn-warning">Save</button>
                 <button type="button" onClick={this.onClear} className="btn btn-danger">Cancel</button>
               </div>
             </div>
@@ -116,4 +113,22 @@ class TaskForm extends Component {
     }
 }
 
-export default TaskForm;
+const mapStateToProps = state =>{
+  return {
+    isDisplayForm : state.isDisplayForm,
+    itemEditing : state.itemEditing
+  }
+};
+
+const mapDispatchToProps = (dispatch, props) =>{
+  return{
+    onSaveTask : (task) =>{
+      dispatch(actions.saveTask(task));
+    },
+    onCloseForm : ()=>{
+      dispatch(actions.closeForm())
+    }
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps ) (TaskForm);

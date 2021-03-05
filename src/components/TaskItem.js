@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './../actions/index';
+
 
 class TaskItem extends Component {
     onUpdateStatus = ()=>{
@@ -6,11 +9,13 @@ class TaskItem extends Component {
     }
 
     onDelete = ()=>{
-        this.props.onDelete(this.props.task.id);
+        this.props.onDeleteTask(this.props.task.id);
+        this.props.onCloseForm();
     }
 
-    onUpdate = ()=>{
-        this.props.onUpdate(this.props.task.id);
+    onEditTask = ()=>{
+      this.props.onOpenForm();
+      this.props.onEditTask(this.props.task);
     }
 
     render() {
@@ -20,11 +25,11 @@ class TaskItem extends Component {
                 <td className="td-check">
                     <span type="text" className={task.status ===true ? 'badge badge-success' : 'badge badge-danger'}
                     onClick = {this.onUpdateStatus}
-                    >{task.status === true ? <i className="fad fa-check  icon-check-none"></i>: <i className="fad fa-check icon-check-green"></i> }</span>
+                    >{task.status === true ? <i className="far fa-check  icon-check-none"></i>: <i className="far fa-check icon-check-green"></i> }</span>
                 </td>
-                <td className={task.status===true ? 'name-new' : 'name-done'} onClick = {this.onUpdate}>{task.name}</td>
+                <td className={task.status===true ? 'name-new' : 'name-done'} onClick = {this.onEditTask}>{task.name}</td>
                 <td  className="td-button">
-                    <button type="button" id="do" className="btn btn-warningg" onClick={this.onUpdate}><i className="fas fa-edit" /></button>
+                    <button type="button" id="do" className="btn btn-warningg" onClick={this.onEditTask}><i className="fas fa-edit" /></button>
                     <button type="button" className="btn btn-dangerr" onClick={this.onDelete}><i className="fas fa-trash-alt" /> </button>
                 </td>
             </tr>       
@@ -32,4 +37,30 @@ class TaskItem extends Component {
     }
 }
 
-export default TaskItem;
+const mapStateToProps = state => {
+    return {  
+    }
+  }
+  
+const mapDispatchToProps = (dispatch, props) =>{
+  return {
+    onUpdateStatus : (id)=>{
+      dispatch(actions.updateStatus(id))
+    },
+    onDeleteTask : (id)=>{
+      dispatch(actions.deleteTask(id))
+    },
+    onCloseForm : ()=>{
+      dispatch(actions.closeForm())
+    },
+    onOpenForm : ()=>{
+      dispatch(actions.openForm())
+    },
+    onEditTask : (task)=>{
+      dispatch(actions.editTask(task))
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps) (TaskItem);
